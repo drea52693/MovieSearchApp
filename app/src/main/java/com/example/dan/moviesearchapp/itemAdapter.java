@@ -7,24 +7,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
-
-
 
 import java.util.List;
 
-public class itemAdapter extends RecyclerView.Adapter<itemAdapter.ViewHolder> {
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     private List<String> values;
 
 
 
 
-    public itemAdapter(List<String> myDataset) {
+    public ItemAdapter(List<String> myDataset) {
         values = myDataset;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
 
         public TextView releaseDateView;
@@ -33,16 +30,26 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.ViewHolder> {
         public TextView typeView;
         public View layout;
 
+
+
         public ViewHolder(View view) {
             super(view);
             layout = view;
-
+            view.setOnClickListener(this);
             releaseDateView = (TextView) view.findViewById(R.id.my_releasedate_textview);
             //plotView = (TextView) view.findViewById(R.id.my_plot_textview);
             titleView = (TextView) view.findViewById(R.id.my_title_textview);
             typeView = (TextView) view.findViewById(R.id.my_type_textview);
 
 
+
+
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            remove(getLayoutPosition());
         }
 
     }
@@ -59,7 +66,7 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.ViewHolder> {
 
 
         @Override
-        public itemAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        public ItemAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
             LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
 
@@ -75,12 +82,7 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.ViewHolder> {
         public void onBindViewHolder(final ViewHolder holder, final int position) {
             final String name = values.get(position);
             holder.titleView.setText(name);
-            holder.titleView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    remove(holder.getLayoutPosition());
-                }
-            });
+
 
             holder.titleView.setText("Title: " + name);
             holder.releaseDateView.setText("Release Date:");

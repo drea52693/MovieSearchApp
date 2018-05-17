@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class listOfMoviesActivity extends AppCompatActivity {
+public class ListOfMoviesActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter itemAdapter;
@@ -25,8 +25,8 @@ public class listOfMoviesActivity extends AppCompatActivity {
         List<String> input = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             input.add("Test" + i);
-        }// define an adapter
-        itemAdapter = new itemAdapter(input);
+        }
+        itemAdapter = new ItemAdapter(input);
         recyclerView.setAdapter(itemAdapter);
 
 
