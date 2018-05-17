@@ -42,6 +42,7 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.ViewHolder> {
             titleView = (TextView) view.findViewById(R.id.my_title_textview);
             typeView = (TextView) view.findViewById(R.id.my_type_textview);
 
+
         }
 
     }
