@@ -24,7 +24,7 @@ public class listOfMoviesActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         List<String> input = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
-            input.add("This is a test" + i);
+            input.add("Test" + i);
         }// define an adapter
         itemAdapter = new itemAdapter(input);
         recyclerView.setAdapter(itemAdapter);
