@@ -72,13 +72,13 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.ViewHolder> {
 
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, final int position) {
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
             final String name = values.get(position);
             holder.titleView.setText(name);
             holder.titleView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    remove(position);
+                    remove(holder.getLayoutPosition());
                 }
             });
 
