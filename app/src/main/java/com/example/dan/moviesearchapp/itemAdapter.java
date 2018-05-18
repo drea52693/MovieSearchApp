@@ -1,7 +1,6 @@
 package com.example.dan.moviesearchapp;
 
 
-
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +12,16 @@ import java.util.List;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     private List<String> values;
+    private List<Movie> movieList;
 
 
 
 
-    public ItemAdapter(List<String> myDataset) {
-        values = myDataset;
+
+
+    public ItemAdapter(List<Movie> myDataset) {
+        this.movieList = myDataset;
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -33,6 +36,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
         public ViewHolder(View view) {
+
             super(view);
             layout = view;
             view.setOnClickListener(this);
@@ -41,15 +45,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             titleView = (TextView) view.findViewById(R.id.my_title_textview);
             typeView = (TextView) view.findViewById(R.id.my_type_textview);
 
-
-
-
         }
 
         @Override
         public void onClick(View v) {
 
             remove(getLayoutPosition());
+
+
         }
 
     }
@@ -60,7 +63,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         }
 
         public void remove(int position) {
-            values.remove(position);
+            movieList.remove(position);
             notifyItemRemoved(position);
         }
 
@@ -80,19 +83,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, final int position) {
-            final String name = values.get(position);
-            holder.titleView.setText(name);
 
-
-            holder.titleView.setText("Title: " + name);
-            holder.releaseDateView.setText("Release Date:");
-            holder.typeView.setText("Type: ");
+            holder.titleView.setText(movieList.get(position).getTitle());
+            holder.releaseDateView.setText(movieList.get(position).getYear());
+            holder.typeView.setText(movieList.get(position).getType());
         }
 
 
         @Override
         public int getItemCount() {
-            return values.size();
+            return movieList.size();
         }
     }
 
