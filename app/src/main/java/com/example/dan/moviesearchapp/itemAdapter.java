@@ -5,7 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -24,7 +27,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
         public TextView releaseDateView;
-        // public final TextView plotView;
+        public ImageView posterImageView;
         public TextView titleView;
         public TextView typeView;
         public View layout;
@@ -36,10 +39,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             super(view);
             layout = view;
             view.setOnClickListener(this);
-            releaseDateView = (TextView) view.findViewById(R.id.my_releasedate_textview);
+            releaseDateView = view.findViewById(R.id.my_releasedate_textview);
             //plotView = (TextView) view.findViewById(R.id.my_plot_textview);
-            titleView = (TextView) view.findViewById(R.id.my_title_textview);
-            typeView = (TextView) view.findViewById(R.id.my_type_textview);
+            titleView = view.findViewById(R.id.my_title_textview);
+            typeView =  view.findViewById(R.id.my_type_textview);
+            posterImageView = view.findViewById(R.id.poster);
 
         }
 
@@ -83,6 +87,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             holder.titleView.setText(movieList.get(position).getTitle());
             holder.releaseDateView.setText(movieList.get(position).getYear());
             holder.typeView.setText(movieList.get(position).getType());
+            Picasso.get().load(movieList.get(position).getPosterURL()).into(holder.posterImageView);
         }
 
 

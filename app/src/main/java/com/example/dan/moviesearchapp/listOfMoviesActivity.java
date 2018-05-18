@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -30,16 +31,12 @@ public class ListOfMoviesActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_of_movies);
 
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
 
 
         new NetworkCallAsyncTask().execute();
@@ -68,37 +65,27 @@ public class ListOfMoviesActivity extends AppCompatActivity {
             OmdbAPI omdbAPI = retrofit.create(OmdbAPI.class);
 
 
-
-            omdbAPI.apiRequest("Avengers").enqueue(new Callback<Movie>() {
+            omdbAPI.search("Avengers").enqueue(new Callback<SearchResponse>() {
                 @Override
-                public void onResponse(Call<Movie> call, Response<Movie> response) {
+                public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
 
-                    List<String> Titles = new ArrayList<>();
-                    Titles.add(response.body().getTitle());
+                    List<Movie> titles = response.body().getMovies();
 
                     Log.d("Tag", "success");
 
-                    JsonParser parser = new JsonParser();
-                    parser.parse()
+                    layoutManager = new LinearLayoutManager(ListOfMoviesActivity.this);
+                    recyclerView.setLayoutManager(layoutManager);
 
-
-                    //List<Movie> data = response.body();
-
-
-
-                   // recyclerView.setAdapter(new ItemAdapter(data));
+                    recyclerView.setAdapter(new ItemAdapter(titles));
 
                     Log.d("Tag", response.body().toString());
-
-
-
-
 
                 }
 
                 @Override
-                public void onFailure(Call<Movie> call, Throwable t) {
-                    t.printStackTrace();
+                public void onFailure(Call<SearchResponse> call, Throwable t) {
+                    Toast.makeText(ListOfMoviesActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+
                 }
 
             });
