@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dip" >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="6dp" >
 
     <TextView
         android:id="@+id/my_title_textview"
@@ -16,7 +17,7 @@
         android:id="@+id/my_releasedate_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/my_title_textview"
         android:layout_alignParentStart="true"
         android:text="Release Date PH" />
 
@@ -28,6 +29,14 @@
         android:layout_alignTop="@+id/my_releasedate_textview"
         android:layout_marginEnd="5dp"
         android:text="Type PH" />
+
+    <ImageView
+        android:id="@+id/poster"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/my_releasedate_textview"
+        tools:src="#123456"
+        />
 
 
 </RelativeLayout>

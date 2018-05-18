@@ -1,31 +1,32 @@
 package com.example.dan.moviesearchapp;
 
+import android.media.Image;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Movie {
 
     @SerializedName("Title")
-    @Expose
     private String title;
     @SerializedName("Year")
-    @Expose
     private String year;
     @SerializedName("imdbID")
-    @Expose
     private String imdbID;
     @SerializedName("Type")
-    @Expose
     private String type;
-
-    // PNG of poster
-   // private Image poster;
+    @SerializedName("Poster")
+    private String posterURL;
 
     public Movie(String title, String year, String imdbID, String type){
         this.title = title;
         this.year = year;
         this.imdbID = imdbID;
         this.type = type;
+    }
+
+    public String getPosterURL(){
+        return posterURL;
     }
 
 
