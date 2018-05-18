@@ -1,10 +1,21 @@
 package com.example.dan.moviesearchapp;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Movie {
 
+    @SerializedName("Title")
+    @Expose
     private String title;
+    @SerializedName("Year")
+    @Expose
     private String year;
+    @SerializedName("imdbID")
+    @Expose
     private String imdbID;
+    @SerializedName("Type")
+    @Expose
     private String type;
 
     // PNG of poster

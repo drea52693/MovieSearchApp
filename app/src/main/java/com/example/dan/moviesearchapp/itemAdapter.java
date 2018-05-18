@@ -15,10 +15,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private List<Movie> movieList;
 
 
-
-
-
-
     public ItemAdapter(List<Movie> myDataset) {
         this.movieList = myDataset;
 

@@ -1,5 +1,7 @@
 package com.example.dan.moviesearchapp;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,14 +10,11 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import org.json.JSONObject;
+import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,69 +40,72 @@ public class ListOfMoviesActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        List<Movie> input = new ArrayList<>();
-        Movie movie1 = new Movie("Star wars", "2017","!231233", "Movie");
-        Movie movie2 = new Movie("Simpsons", "2015", "444211", "Tv Show");
-        input.add(movie1);
-        input.add(movie2);
-
-        Runnable run = new Runnable() {
-            @Override
-            public void run() {
 
 
+        new NetworkCallAsyncTask().execute();
 
-                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor()
-                        .setLevel(HttpLoggingInterceptor.Level.BODY);
+    }
 
-                OkHttpClient client = new OkHttpClient.Builder()
-                        .addInterceptor(loggingInterceptor)
-                        .build();
+    class NetworkCallAsyncTask extends AsyncTask<String, Void, Boolean> {
 
-                Gson gson = new GsonBuilder()
-                        .setPrettyPrinting()
-                        .create();
+        private ProgressDialog dialog;
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
 
 
-                Retrofit retrofit = new Retrofit.Builder()
-                        .client(client)
-                        .baseUrl(BASE_URL)
-                        .addConverterFactory(GsonConverterFactory.create(gson))
-                        .build();
+            Gson gson = new GsonBuilder()
+                    .setPrettyPrinting()
+                    .create();
 
-                OmdbAPI omdbAPI = retrofit.create(OmdbAPI.class);
-                omdbAPI.apiRequest("Avengers").enqueue(new Callback<JSONObject>() {
-                    @Override
-                    public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
 
-                       // Take JSON response and parse it
-                        // store each movie as an object
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(HttpClient.client)
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+
+            OmdbAPI omdbAPI = retrofit.create(OmdbAPI.class);
 
 
 
-                    Log.d("Tag", "Succeeded");
-                    }
+            omdbAPI.apiRequest("Avengers").enqueue(new Callback<Movie>() {
+                @Override
+                public void onResponse(Call<Movie> call, Response<Movie> response) {
 
-                    @Override
-                    public void onFailure(Call<JSONObject> call, Throwable t) {
-                            Log.d("tag", "ERROR");
-                    }
-                });
+                    List<String> Titles = new ArrayList<>();
+                    Titles.add(response.body().getTitle());
 
+                    Log.d("Tag", "success");
 
-
-            }
-
+                    JsonParser parser = new JsonParser();
+                    parser.parse()
 
 
-        };
-        run.run();
+                    //List<Movie> data = response.body();
 
 
 
-        itemAdapter = new ItemAdapter(input);
-        recyclerView.setAdapter(itemAdapter);
+                   // recyclerView.setAdapter(new ItemAdapter(data));
 
+                    Log.d("Tag", response.body().toString());
+
+
+
+
+
+                }
+
+                @Override
+                public void onFailure(Call<Movie> call, Throwable t) {
+                    t.printStackTrace();
+                }
+
+            });
+
+            return true;
+
+        }
 
     }
 }
