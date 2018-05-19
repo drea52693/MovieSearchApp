@@ -72,7 +72,7 @@ public class Movie implements Comparable<Movie>{
         else if (year.length() == 5){
 
             String replaced = year.replace('–', '0');
-            // replaced = replaced.substring(replaced.length()-5, replaced.length()-1);
+            replaced = replaced.substring(replaced.length()-5, replaced.length()-1);
             this.intYear = Integer.parseInt(replaced);
         }
             else{
