@@ -1,31 +1,19 @@
 package com.example.dan.moviesearchapp;
 
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParser;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ListOfMoviesActivity extends AppCompatActivity {
-
-    static final String BASE_URL = "http://www.omdbapi.com";
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter itemAdapter;
@@ -43,19 +31,10 @@ public class ListOfMoviesActivity extends AppCompatActivity {
         Runnable run = new Runnable() {
             @Override
             public void run() {
-                Gson gson = new GsonBuilder()
-                        .setPrettyPrinting()
-                        .create();
 
+                RetrofitSingleton retrofitSingleton = RetrofitSingleton.getInstance();
 
-                Retrofit retrofit = new Retrofit.Builder()
-                        .client(HttpClient.client)
-                        .baseUrl(BASE_URL)
-                        .addConverterFactory(GsonConverterFactory.create(gson))
-                        .build();
-
-                OmdbAPI omdbAPI = retrofit.create(OmdbAPI.class);
-
+                OmdbAPI omdbAPI = retrofitSingleton.retrofit.create(OmdbAPI.class);
 
                 omdbAPI.search("Park").enqueue(new Callback<SearchResponse>() {
                     @Override
