@@ -1,12 +1,14 @@
 package com.example.dan.moviesearchapp;
 
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -16,11 +18,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     private List<String> values;
     private List<Movie> movieList;
+    private Context context;
 
-
-    public ItemAdapter(List<Movie> myDataset) {
+    public ItemAdapter(List<Movie> myDataset, Context context) {
         this.movieList = myDataset;
-
+        this.context =  context;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -50,7 +52,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         @Override
         public void onClick(View v) {
 
-            remove(getLayoutPosition());
+
+            Toast.makeText(context, "Added to favorites", Toast.LENGTH_LONG).show();
 
 
         }

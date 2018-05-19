@@ -2,39 +2,53 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="6dp" >
+    android:padding="6dp"
+    android:background="@color/colorBackground">
 
     <TextView
         android:id="@+id/my_title_textview"
+        style = "@style/AppTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title PH" />
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/poster"
+        android:fontFamily="sans-serif"
+        android:text="Title PH"
+        android:textSize="24sp"
+        android:typeface="normal"
+        />
 
     <TextView
         android:id="@+id/my_releasedate_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/my_title_textview"
-        android:layout_alignParentStart="true"
-        android:text="Release Date PH" />
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/poster"
+        android:text="Release Date PH"
+        android:textSize="18sp"
+        />
 
     <TextView
         android:id="@+id/my_type_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/my_releasedate_textview"
-        android:layout_marginEnd="5dp"
-        android:text="Type PH" />
+        android:layout_below="@id/my_releasedate_textview"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/poster"
+        android:text="Type PH"
+        android:textSize="18sp"
+        />
 
     <ImageView
         android:id="@+id/poster"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@id/my_releasedate_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         tools:src="#123456"
         />
 

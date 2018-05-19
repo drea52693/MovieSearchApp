@@ -1,11 +1,25 @@
 package com.example.dan.moviesearchapp;
 
 import android.media.Image;
+import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Movie {
+public class Movie implements Comparable<Movie>{
+
+
+    public int compareTo(@NonNull Movie m) {
+
+        if(this.getIntYear() < m.getIntYear()){
+            return 1;
+        }else if (this.getIntYear() == m.getIntYear()){
+            return 0;
+        }else
+            return -1;
+
+    }
 
     @SerializedName("Title")
     private String title;
@@ -17,13 +31,9 @@ public class Movie {
     private String type;
     @SerializedName("Poster")
     private String posterURL;
+    private int intYear;
 
-    public Movie(String title, String year, String imdbID, String type){
-        this.title = title;
-        this.year = year;
-        this.imdbID = imdbID;
-        this.type = type;
-    }
+
 
     public String getPosterURL(){
         return posterURL;
@@ -42,9 +52,36 @@ public class Movie {
         return year;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public int getIntYear(){
+        return intYear;
     }
+
+    public void setYear(String year) {
+
+        this.year = year;
+
+
+    }
+
+    public void setIntYear(String year) {
+        if (year.length()> 5 ) {
+            String replaced = year.replace('–','0');
+            replaced = replaced.substring(replaced.length()-4, replaced.length());
+            this.intYear = Integer.parseInt(replaced);
+            }
+        else if (year.length() == 5){
+
+            String replaced = year.replace('–', '0');
+            // replaced = replaced.substring(replaced.length()-5, replaced.length()-1);
+            this.intYear = Integer.parseInt(replaced);
+        }
+            else{
+                this.intYear = Integer.parseInt(year);
+            }
+
+
+        }
+
 
     public String getImdbID() {
         return imdbID;
@@ -74,4 +111,6 @@ public class Movie {
         return sb.toString();
 
     }
+
+
 }

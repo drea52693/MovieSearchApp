@@ -14,6 +14,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -39,60 +40,50 @@ public class ListOfMoviesActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
 
-        new NetworkCallAsyncTask().execute();
+        Runnable run = new Runnable() {
+            @Override
+            public void run() {
+                Gson gson = new GsonBuilder()
+                        .setPrettyPrinting()
+                        .create();
 
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .client(HttpClient.client)
+                        .baseUrl(BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build();
+
+                OmdbAPI omdbAPI = retrofit.create(OmdbAPI.class);
+
+
+                omdbAPI.search("Park").enqueue(new Callback<SearchResponse>() {
+                    @Override
+                    public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+
+                        List<Movie> movies = response.body().getMovies();
+                        for(Movie m : movies){
+                            m.setIntYear(m.getYear());
+                        }
+                        Collections.sort(movies);
+                        layoutManager = new LinearLayoutManager(ListOfMoviesActivity.this);
+                        recyclerView.setLayoutManager(layoutManager);
+
+                        recyclerView.setAdapter(new ItemAdapter(movies, ListOfMoviesActivity.this));
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<SearchResponse> call, Throwable t) {
+                        Toast.makeText(ListOfMoviesActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+
+                    }
+
+                });
+            }
+        };
+    run.run();
     }
 
-    class NetworkCallAsyncTask extends AsyncTask<String, Void, Boolean> {
 
-        private ProgressDialog dialog;
-
-        @Override
-        protected Boolean doInBackground(String... strings) {
-
-
-            Gson gson = new GsonBuilder()
-                    .setPrettyPrinting()
-                    .create();
-
-
-            Retrofit retrofit = new Retrofit.Builder()
-                    .client(HttpClient.client)
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-
-            OmdbAPI omdbAPI = retrofit.create(OmdbAPI.class);
-
-
-            omdbAPI.search("Avengers").enqueue(new Callback<SearchResponse>() {
-                @Override
-                public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
-
-                    List<Movie> titles = response.body().getMovies();
-
-                    Log.d("Tag", "success");
-
-                    layoutManager = new LinearLayoutManager(ListOfMoviesActivity.this);
-                    recyclerView.setLayoutManager(layoutManager);
-
-                    recyclerView.setAdapter(new ItemAdapter(titles));
-
-                    Log.d("Tag", response.body().toString());
-
-                }
-
-                @Override
-                public void onFailure(Call<SearchResponse> call, Throwable t) {
-                    Toast.makeText(ListOfMoviesActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
-
-                }
-
-            });
-
-            return true;
-
-        }
-
-    }
 }
