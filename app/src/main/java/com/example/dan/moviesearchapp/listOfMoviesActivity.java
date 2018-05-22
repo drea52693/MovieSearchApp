@@ -25,7 +25,7 @@ public class ListOfMoviesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_of_movies);
 
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        recyclerView =  findViewById(R.id.my_recycler_view);
 
 
         Runnable run = new Runnable() {
@@ -40,7 +40,9 @@ public class ListOfMoviesActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
 
+
                         List<Movie> movies = response.body().getMovies();
+
                         for(Movie m : movies){
                             m.setIntYear(m.getYear());
                         }
@@ -54,7 +56,7 @@ public class ListOfMoviesActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<SearchResponse> call, Throwable t) {
-                        Toast.makeText(ListOfMoviesActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ListOfMoviesActivity.this, "Invalid search, try again", Toast.LENGTH_LONG).show();
 
                     }
 

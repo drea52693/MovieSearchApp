@@ -42,7 +42,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             layout = view;
             view.setOnClickListener(this);
             releaseDateView = view.findViewById(R.id.my_releasedate_textview);
-            //plotView = (TextView) view.findViewById(R.id.my_plot_textview);
             titleView = view.findViewById(R.id.my_title_textview);
             typeView =  view.findViewById(R.id.my_type_textview);
             posterImageView = view.findViewById(R.id.poster);
@@ -52,9 +51,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         @Override
         public void onClick(View v) {
 
-
             Toast.makeText(context, "Added to favorites", Toast.LENGTH_LONG).show();
-
 
         }
 

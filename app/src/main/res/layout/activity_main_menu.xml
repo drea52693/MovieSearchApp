@@ -19,7 +19,7 @@
         android:textSize="40sp" />
 
     <EditText
-        android:id="@+id/title_editText"
+        android:id="@id/title"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -30,10 +30,10 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/releaseYear_editText"
+        android:id="@+id/releaseYear"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title_editText"
+        android:layout_below="@id/title"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:ems="10"
@@ -44,22 +44,32 @@
         android:id="@+id/type_dropDown"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/releaseYear_editText"
+        android:layout_below="@id/releaseYear"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown"/>
 
     <TextView
+        android:id="@+id/required"
         android:layout_width="200dp"
         android:layout_height="20dp"
-        android:layout_below="@+id/type_dropDown"
+        android:layout_below="@id/type_dropDown"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="*Required"
+        android:textSize="12dp"
+        android:textStyle="italic" />
+
+    <Button
+        android:id="@+id/search"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/required"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
-        android:text="*Required"
-        android:textSize="12dp" />
-
-
+        android:layout_marginBottom="41dp"
+        android:text="Search" />
 
 
 </RelativeLayout>

@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Smart Movie Searcher</string>
+    <string name="search">Search</string>
+    <string name="required">*Required</string>
+    <string name="releaseYear">Release Year</string>
+    <string name="title">Title*</string>
     <string-array name ="type_options">
         <item>TV Series</item>
         <item>Movie</item>
