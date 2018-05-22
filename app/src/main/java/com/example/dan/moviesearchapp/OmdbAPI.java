@@ -12,4 +12,5 @@ interface OmdbAPI {
      public Call<SearchResponse> search(@Query("s") String name);
 
 
+
 }

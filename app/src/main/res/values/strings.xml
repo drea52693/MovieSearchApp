@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">MovieSearchApp</string>
+    <string name="app_name">Smart Movie Searcher</string>
+    <string-array name ="type_options">
+        <item>TV Series</item>
+        <item>Movie</item>
+    </string-array>
 </resources>
