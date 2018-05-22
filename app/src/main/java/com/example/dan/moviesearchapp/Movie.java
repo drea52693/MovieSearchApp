@@ -1,13 +1,18 @@
 package com.example.dan.moviesearchapp;
 
 import android.media.Image;
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Movie implements Comparable<Movie>{
+import java.io.Serializable;
+
+public class Movie implements Comparable<Movie>, Parcelable  {
 
 
     public int compareTo(@NonNull Movie m) {
@@ -112,5 +117,43 @@ public class Movie implements Comparable<Movie>{
 
     }
 
+    public static final Parcelable.Creator<Movie> CREATOR
+            = new Parcelable.Creator<Movie>() {
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
+    public Movie(Parcel in) {
+        this.title = in.readString();
+        this.year = in.readString();
+        this.imdbID = in.readString();
+        this.type = in.readString();
+        this.posterURL = in.readString();
+
+    }
+
+
+    @Override
+    public int describeContents() {
+        return this.hashCode();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        Bundle b = new Bundle();
+        dest.writeString(year);
+        dest.writeString(imdbID);
+        dest.writeString(type);
+        dest.writeString(posterURL);
+
+    }
+
 
 }
+

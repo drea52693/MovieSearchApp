@@ -1,5 +1,6 @@
 package com.example.dan.moviesearchapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -57,16 +59,12 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                     public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
 
 
-                        List<Movie> movies = response.body().getMovies();
+                        // onResponse send intent to ListOfMoviesActivity with list of movies
+                        ArrayList<Movie> movies = response.body().getMovies();
+                        Intent intent = new Intent(MainMenuActivity.this, ListOfMoviesActivity.class);
+                        intent.putExtra("Movies", movies);
+                        startActivity(intent);
 
-                        for(Movie m : movies){
-                            m.setIntYear(m.getYear());
-                        }
-                        Collections.sort(movies);
-                        layoutManager = new LinearLayoutManager(MainMenuActivity.this);
-                        recyclerView.setLayoutManager(layoutManager);
-
-                        recyclerView.setAdapter(new ItemAdapter(movies, MainMenuActivity.this));
 
                     }
 
@@ -83,4 +81,4 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     }
 
     }
-}
+

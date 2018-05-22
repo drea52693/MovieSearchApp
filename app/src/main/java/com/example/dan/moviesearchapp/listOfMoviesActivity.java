@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,46 +27,22 @@ public class ListOfMoviesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_of_movies);
 
-        recyclerView =  findViewById(R.id.my_recycler_view);
+        recyclerView = findViewById(R.id.my_recycler_view);
 
 
-        Runnable run = new Runnable() {
-            @Override
-            public void run() {
+        Bundle data = getIntent().getExtras();
+        ArrayList<Movie> movies = data.getParcelableArrayList("Movies");
 
-                RetrofitSingleton retrofitSingleton = RetrofitSingleton.getInstance();
+        for (Movie m : movies) {
+            m.setIntYear(m.getYear());
+        }
+        Collections.sort(movies);
 
-                OmdbAPI omdbAPI = retrofitSingleton.retrofit.create(OmdbAPI.class);
+        layoutManager = new LinearLayoutManager(ListOfMoviesActivity.this);
+        recyclerView.setLayoutManager(layoutManager);
 
-                omdbAPI.search("Star").enqueue(new Callback<SearchResponse>() {
-                    @Override
-                    public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+        recyclerView.setAdapter(new ItemAdapter(movies, ListOfMoviesActivity.this));
 
-
-                        List<Movie> movies = response.body().getMovies();
-
-                        for(Movie m : movies){
-                            m.setIntYear(m.getYear());
-                        }
-                        Collections.sort(movies);
-                        layoutManager = new LinearLayoutManager(ListOfMoviesActivity.this);
-                        recyclerView.setLayoutManager(layoutManager);
-
-                        recyclerView.setAdapter(new ItemAdapter(movies, ListOfMoviesActivity.this));
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<SearchResponse> call, Throwable t) {
-                        Toast.makeText(ListOfMoviesActivity.this, "Invalid search, try again", Toast.LENGTH_LONG).show();
-
-                    }
-
-                });
-            }
-        };
-    run.run();
     }
-
 
 }

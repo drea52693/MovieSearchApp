@@ -2,20 +2,22 @@ package com.example.dan.moviesearchapp;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchResponse {
 
     @SerializedName("Search")
-    private List<Movie> movies;
+    private ArrayList<Movie> movies;
     @SerializedName("totalResults")
     private int results;
 
-    public List<Movie> getMovies() {
+    public ArrayList<Movie> getMovies() {
         return movies;
     }
 
-    public void setMovies(List<Movie> movies) {
+    public void setMovies(ArrayList<Movie> movies) {
         this.movies = movies;
     }
 
