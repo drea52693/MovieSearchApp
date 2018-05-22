@@ -36,7 +36,7 @@ public class ListOfMoviesActivity extends AppCompatActivity {
 
                 OmdbAPI omdbAPI = retrofitSingleton.retrofit.create(OmdbAPI.class);
 
-                omdbAPI.search("Park").enqueue(new Callback<SearchResponse>() {
+                omdbAPI.search("Star").enqueue(new Callback<SearchResponse>() {
                     @Override
                     public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
 
