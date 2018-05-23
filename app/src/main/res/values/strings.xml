@@ -5,6 +5,7 @@
     <string name="releaseYear">Release Year</string>
     <string name="title">Title*</string>
     <string-array name ="type_options">
+        <item>None</item>
         <item>TV Series</item>
         <item>Movie</item>
     </string-array>

@@ -3,6 +3,7 @@ package com.example.dan.moviesearchapp;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
@@ -19,10 +21,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private List<String> values;
     private List<Movie> movieList;
     private Context context;
+    public ArrayList<String> favorites;
 
     public ItemAdapter(List<Movie> myDataset, Context context) {
         this.movieList = myDataset;
         this.context =  context;
+        this.favorites = new ArrayList<>();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -32,7 +36,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         public ImageView posterImageView;
         public TextView titleView;
         public TextView typeView;
+        public String title;
         public View layout;
+
+        public String getTitle(){
+
+            title = (String) titleView.getText();
+            return title;
+        }
 
 
 
@@ -48,10 +59,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         }
 
+        // TODO Make favorites persist
+
         @Override
         public void onClick(View v) {
 
+            if(!favorites.contains(this.getTitle()))
+                favorites.add(this.getTitle());
             Toast.makeText(context, "Added to favorites", Toast.LENGTH_LONG).show();
+            Log.d("TAG",  favorites.toString());
 
         }
 
