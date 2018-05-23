@@ -136,10 +136,17 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
                                 }
 
+                                if(movies.isEmpty()){
 
-                            Intent intent = new Intent(MainMenuActivity.this, ListOfMoviesActivity.class);
-                            intent.putExtra("Movies", movies);
-                            startActivity(intent);
+                                        Toast.makeText(MainMenuActivity.this, "No movies found with this critera", Toast.LENGTH_LONG).show();
+
+                                }else {
+
+
+                                    Intent intent = new Intent(MainMenuActivity.this, ListOfMoviesActivity.class);
+                                    intent.putExtra("Movies", movies);
+                                    startActivity(intent);
+                                }
 
                         } catch (NullPointerException e){
                             Toast.makeText(MainMenuActivity.this, "Please enter a title", Toast.LENGTH_LONG).show();
