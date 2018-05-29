@@ -29,6 +29,8 @@ import retrofit2.Response;
 
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static ArrayList<Movie> movies;
+
     public Button searchButton;
     public EditText title;
     public EditText releaseYear;
@@ -92,10 +94,10 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                     public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
 
 
+
                         try{
 
-
-                            ArrayList<Movie> movies = response.body().getMovies();
+                            movies = response.body().getMovies();
 
 
 
@@ -130,8 +132,11 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
                                         }
                                     else if (obj.getType().equals("series") &&  !(typeInput.equals("TV Series"))){
+
                                             itr.remove();
+
                                         }
+
                                 }
 
                                 }
@@ -146,11 +151,15 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                                     Intent intent = new Intent(MainMenuActivity.this, ListOfMoviesActivity.class);
                                     intent.putExtra("Movies", movies);
                                     startActivity(intent);
+
                                 }
 
                         } catch (NullPointerException e){
-                            Toast.makeText(MainMenuActivity.this, "Please enter a title", Toast.LENGTH_LONG).show();
+
+                            Toast.makeText(MainMenuActivity.this, "Please enter a valid title", Toast.LENGTH_LONG).show();
+
                         }
+
                     }
 
                     @Override
@@ -164,7 +173,9 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 });
             }
         };
+
         run.run();
+
     }
 
     }

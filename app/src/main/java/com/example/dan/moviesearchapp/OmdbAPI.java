@@ -11,6 +11,10 @@ interface OmdbAPI {
      @GET("/?apikey=4b8edb9d")
      public Call<SearchResponse> search(@Query("s") String name);
 
+     @GET("/?apikey=4b8edb9d")
+     public Call<ChildMovieSearchResponse> getMovieChildData(@Query("i") String imdbID);
+
+
 
 
 }

@@ -13,6 +13,7 @@ public class SearchResponse {
     @SerializedName("totalResults")
     private int results;
 
+
     public ArrayList<Movie> getMovies() {
         return movies;
     }

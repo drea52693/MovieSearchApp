@@ -11,6 +11,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Movie implements Comparable<Movie>, Parcelable  {
 
@@ -37,6 +39,17 @@ public class Movie implements Comparable<Movie>, Parcelable  {
     @SerializedName("Poster")
     private String posterURL;
     private int intYear;
+
+    public static HashMap<String, String> getChildMovieData() {
+        return childMovieData;
+    }
+
+    public static void setChildMovieData(HashMap<String, String> childMovieData) {
+        Movie.childMovieData = childMovieData;
+    }
+
+    public static HashMap<String, String> childMovieData;
+
 
 
 

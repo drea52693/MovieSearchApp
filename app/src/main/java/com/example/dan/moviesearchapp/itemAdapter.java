@@ -64,10 +64,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         @Override
         public void onClick(View v) {
 
-            if(!favorites.contains(this.getTitle()))
-                favorites.add(this.getTitle());
-            Toast.makeText(context, "Added to favorites", Toast.LENGTH_LONG).show();
-            Log.d("TAG",  favorites.toString());
+            // On click open Fragment with movie details
+
+
+//            if(!favorites.contains(this.getTitle()))
+//                favorites.add(this.getTitle());
+//            Toast.makeText(context, "Added to favorites", Toast.LENGTH_LONG).show();
+//            Log.d("TAG",  favorites.toString());
 
         }
 
