@@ -126,16 +126,15 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
                                     Movie obj = (Movie) itr.next();
 
-                                    if(obj.getType().equals("movie") && !(typeInput.equals("Movie"))) {
+                                    if(obj.getType().equals("movie") && !(typeInput.equals("Movie")))
+                                        itr.remove();
 
+
+                                    else if (obj.getType().equals("series") &&  !(typeInput.equals("TV Series")))
+                                        itr.remove();
+
+                                         else if(obj.getType().equals("game") && !(typeInput.equals("Video Game")))
                                             itr.remove();
-
-                                        }
-                                    else if (obj.getType().equals("series") &&  !(typeInput.equals("TV Series"))){
-
-                                            itr.remove();
-
-                                        }
 
                                 }
 

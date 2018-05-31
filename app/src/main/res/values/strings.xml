@@ -12,8 +12,9 @@
     <string name="websiteURL"><b>Website URL: </b></string>
 
     <string-array name="type_options">
-        <item>None</item>
+        <item>No filter</item>
         <item>TV Series</item>
         <item>Movie</item>
+        <item>Video Game</item>
     </string-array>
 </resources>
