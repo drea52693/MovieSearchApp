@@ -1,13 +1,25 @@
 package com.example.dan.moviesearchapp;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChildMovieSearchResponse {
+public class ChildMovieSearchResponse implements Parcelable{
 
+    @SerializedName("Title")
+    private String title;
+    @SerializedName("Released")
+    private String releaseDate;
+    @SerializedName("Poster")
+    private String posterURL;
+    @SerializedName("Type")
+    private String type;
     @SerializedName("Rated")
     private String mPAARating;
     @SerializedName("Runtime")
@@ -32,6 +44,38 @@ public class ChildMovieSearchResponse {
 
     public String getmPAARating() {
         return mPAARating;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getPosterURL() {
+        return posterURL;
+    }
+
+    public void setPosterURL(String posterURL) {
+        this.posterURL = posterURL;
     }
 
     public void setmPAARating(String mPAARating) {
@@ -139,4 +183,54 @@ public class ChildMovieSearchResponse {
 
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mPAARating);
+        dest.writeString(runTime);
+        dest.writeString(genre);
+        dest.writeString(actors);
+        dest.writeString(plot);
+        dest.writeString(metaScore);
+        dest.writeString(boxOffice);
+        dest.writeString(director);
+        dest.writeString(websiteURL);
+        dest.writeString(title);
+        dest.writeString(releaseDate);
+        dest.writeString(posterURL);
+        dest.writeString(type);
+    }
+
+    public static final Parcelable.Creator<ChildMovieSearchResponse> CREATOR = new Parcelable.Creator<ChildMovieSearchResponse>() {
+        public ChildMovieSearchResponse createFromParcel(Parcel in) {
+            return new ChildMovieSearchResponse(in);
+        }
+
+        public ChildMovieSearchResponse[] newArray(int size) {
+            return new ChildMovieSearchResponse[size];
+        }
+    };
+
+    private ChildMovieSearchResponse(Parcel in) {
+        mPAARating = in.readString();
+        runTime = in.readString();
+        genre = in.readString();
+        actors = in.readString();
+        plot = in.readString();
+        metaScore = in.readString();
+        boxOffice = in.readString();
+        director = in.readString();
+        websiteURL = in.readString();
+        title = in.readString();
+        releaseDate = in.readString();
+        posterURL = in.readString();
+        type = in.readString();
+
+
+    }
 }
+

@@ -2,6 +2,7 @@ package com.example.dan.moviesearchapp;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,16 +15,23 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
-    private List<String> values;
-    private List<Movie> movieList;
+    private ArrayList<String> values;
+    private ArrayList<Movie> movieList;
     private Context context;
     public ArrayList<String> favorites;
+    private String movieTitle;
 
-    public ItemAdapter(List<Movie> myDataset, Context context) {
+    public ItemAdapter(ArrayList<Movie> myDataset, Context context) {
         this.movieList = myDataset;
         this.context =  context;
         this.favorites = new ArrayList<>();
@@ -36,6 +44,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         public ImageView posterImageView;
         public TextView titleView;
         public TextView typeView;
+        public TextView imdbIDView;
+        public String imdbID;
         public String title;
         public View layout;
 
@@ -45,9 +55,17 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             return title;
         }
 
+        public String getImdbID(){
+
+            imdbID = (String) imdbIDView.getText();
+            return imdbID;
+
+        }
+
 
 
         public ViewHolder(View view) {
+
 
             super(view);
             layout = view;
@@ -56,6 +74,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             titleView = view.findViewById(R.id.my_title_textview);
             typeView =  view.findViewById(R.id.my_type_textview);
             posterImageView = view.findViewById(R.id.poster);
+            imdbIDView = view.findViewById(R.id.imdbID);
 
         }
 
@@ -65,12 +84,74 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         public void onClick(View v) {
 
             // On click open Fragment with movie details
+            Log.d("TAG", toString());
+
+            Runnable run = new Runnable() {
+                @Override
+                public void run() {
 
 
-//            if(!favorites.contains(this.getTitle()))
-//                favorites.add(this.getTitle());
-//            Toast.makeText(context, "Added to favorites", Toast.LENGTH_LONG).show();
-//            Log.d("TAG",  favorites.toString());
+
+                    // Get child data for each Movie
+
+
+                        // Log.d("TAG", itr.toString());
+
+                        RetrofitSingleton retrofitSingleton = RetrofitSingleton.getInstance();
+
+                        OmdbAPI omdbAPI = retrofitSingleton.retrofit.create(OmdbAPI.class);
+
+
+                        if (!(getImdbID().isEmpty())) {
+
+                            omdbAPI.getMovieChildData(getImdbID()).enqueue(new Callback<ChildMovieSearchResponse>() {
+                                @Override
+                                public void onResponse(Call<ChildMovieSearchResponse> call, Response<ChildMovieSearchResponse> response) {
+
+
+                                    try {
+
+                                        ChildMovieSearchResponse childMovieData = response.body();
+
+                                        Intent intent = new Intent(context, MoviesDetailsActivity.class);
+                                        intent.putExtra("Movie data", childMovieData);
+                                        context.startActivity(intent);
+
+
+
+
+
+
+                                    } catch (NullPointerException e) {
+
+
+                                        Log.d("TAG", "Response is null");
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ChildMovieSearchResponse> call, Throwable t) {
+
+                                    Log.d("TAG", "Failed Response ");
+
+                                }
+                            });
+                        }
+                    }
+
+
+
+
+            };
+
+            run.run();
+
+
+
+          /*  if(!favorites.contains(this.getTitle()))
+               favorites.add(this.getTitle());
+            Toast.makeText(context, "Added to favorites", Toast.LENGTH_LONG).show();
+            Log.d("TAG",  favorites.toString());*/
 
         }
 
@@ -103,10 +184,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         @Override
         public void onBindViewHolder(final ViewHolder holder, final int position) {
 
+
             holder.titleView.setText(movieList.get(position).getTitle());
             holder.releaseDateView.setText(movieList.get(position).getYear());
             holder.typeView.setText(movieList.get(position).getType());
+            holder.imdbIDView.setText(movieList.get(position).getImdbID());
             Picasso.get().load(movieList.get(position).getPosterURL()).into(holder.posterImageView);
+
         }
 
 

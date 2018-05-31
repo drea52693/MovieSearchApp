@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="6dp"
+    android:padding="5dp"
     android:background="@color/colorBackground">
 
     <TextView
@@ -45,6 +45,17 @@
         android:text="Type PH"
         android:textSize="18sp"
         />
+
+    <TextView
+        android:id="@+id/imdbID"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/my_type_textview"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/poster"
+        android:text="imdbID PH"
+        android:textSize="18dp"/>
 
     <ImageView
         android:id="@+id/poster"
