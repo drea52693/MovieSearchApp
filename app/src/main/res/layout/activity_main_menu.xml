@@ -27,7 +27,7 @@
         android:layout_below="@id/appTitle_textView"
         android:layout_marginTop="10dp"
         android:ems="10"
-        android:hint="Title*"
+        android:hint="@string/title"
         android:inputType="textPersonName" />
 
     <EditText
@@ -38,7 +38,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:ems="10"
-        android:hint="Release Year"
+        android:hint="@string/releaseYear"
         android:inputType="date" />
 
     <Spinner
@@ -58,7 +58,7 @@
         android:layout_below="@id/type_dropDown"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="*Required"
+        android:text="@string/required"
         android:textSize="12dp"
         android:textStyle="italic" />
 
@@ -70,7 +70,7 @@
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="41dp"
-        android:text="Search" />
+        android:text="@string/search" />
 
 
 </RelativeLayout>

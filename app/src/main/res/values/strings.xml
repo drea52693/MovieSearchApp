@@ -4,7 +4,14 @@
     <string name="required">*Required</string>
     <string name="releaseYear">Release Year</string>
     <string name="title">Title*</string>
-    <string-array name ="type_options">
+    <string name="directors"><b>Directors: </b></string>
+    <string name="actors"><b>Actors: </b></string>
+    <string name="plot"><b>Plot description: </b></string>
+    <string name="score"><b>MetaScore: </b></string>
+    <string name="boxOffice"><b>Box Office Sales: </b></string>
+    <string name="websiteURL"><b>Website URL: </b></string>
+
+    <string-array name="type_options">
         <item>None</item>
         <item>TV Series</item>
         <item>Movie</item>

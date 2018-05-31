@@ -1,9 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MoviesDetailsActivity">
+    android:orientation="vertical"
+    android:padding="5dp">
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/poster"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:src="#123456"
+        />
+
+    <TextView
+        android:id="@+id/titleTextView"
+        style = "@style/AppTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/poster"
+        android:fontFamily="sans-serif"
+        android:text="Title PH"
+        android:textSize="28sp"
+        android:typeface="normal"
+        />
+
+    <TextView
+        android:id="@+id/releaseDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/poster"
+        android:layout_below="@id/titleTextView"
+        android:textSize="20dp"
+        android:text="Release Date PH"/>
+
+    <TextView
+        android:id="@+id/typeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@id/releaseDateTextView"
+        android:layout_toRightOf="@id/poster"
+        android:text="Type PH"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:id="@+id/mPAARatingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@id/typeTextView"
+        android:layout_toRightOf="@id/poster"
+        android:text="MPAA Rating PH"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:id="@+id/runtimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mPAARatingTextView"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/poster"
+        android:text="runetime PH"
+        android:textSize="20dp"
+        />
+    <TextView
+        android:id="@+id/genreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@id/runtimeTextView"
+        android:layout_toRightOf="@id/poster"
+        android:text="genre PH"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:id="@+id/directorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/poster"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/directors"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:id="@+id/actorsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/directorTextView"
+        android:text="@string/actors"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:id="@+id/plotTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/actorsTextView"
+        android:text="@string/plot"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:id="@+id/scoreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/plotTextView"
+        android:text="@string/score"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:id="@+id/boxOfficeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/scoreTextView"
+        android:text="@string/boxOffice"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/websiteURLTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/boxOfficeTextView"
+        android:text="@string/websiteURL"
+        android:textSize="20dp" />
+
+    <ImageButton
+        android:id="@+id/favoritesButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/star" />
+
+
+
+</RelativeLayout>
