@@ -7,11 +7,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentPagerAdapter extends FragmentStatePagerAdapter{
+public class PagerAdapter extends FragmentStatePagerAdapter{
 
     private final List<Fragment> mFragmentList = new ArrayList<>();
 
-    public FragmentPagerAdapter(FragmentManager fm){
+    public PagerAdapter(FragmentManager fm){
         super(fm);
     }
 
