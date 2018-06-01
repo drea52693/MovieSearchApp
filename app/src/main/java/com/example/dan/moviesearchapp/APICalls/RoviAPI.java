@@ -1,4 +1,4 @@
-package com.example.dan.moviesearchapp;
+package com.example.dan.moviesearchapp.APICalls;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

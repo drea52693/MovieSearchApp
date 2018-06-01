@@ -4,30 +4,32 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dan.moviesearchapp.APICalls.Movie;
+import com.example.dan.moviesearchapp.APICalls.OmdbAPI;
+import com.example.dan.moviesearchapp.APICalls.SearchResponse;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private final String TAG = getClass().getSimpleName();
 
     public static ArrayList<Movie> movies;
 
@@ -89,7 +91,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 final String titleInput = title.getText().toString();
                 final String releaseYearInput = releaseYear.getText().toString();
                 final String typeInput = type.getSelectedItem().toString();
-                omdbAPI.search(titleInput).enqueue(new Callback<SearchResponse>() {
+                omdbAPI.searchForTitle(titleInput).enqueue(new Callback<SearchResponse>() {
                     @Override
                     public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
 
@@ -118,7 +120,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                             }
 
 
-                            if (!typeInput.equals("None")) {
+                            if (!typeInput.equals("No filter")) {
 
                                 Iterator itr = movies.iterator();
 
@@ -175,6 +177,51 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
         run.run();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.mainmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_home:
+                // Send to home screen
+                Toast.makeText(this,"Going to home page...", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, MainMenuActivity.class);
+                startActivity(intent);
+
+                break;
+
+            case R.id.action_movie_listings:
+                // send to movie listings
+                Toast.makeText(this,"Going to Movie Listings...", Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.action_favorites:
+                // Send to favorites screen
+                Toast.makeText(this,"Going to favorites...", Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.action_refresh:
+                // Refresh the page
+                Toast.makeText(this, "Refresh selected", Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.action_settings:
+                // Send to settings page
+                Toast.makeText(this, "Settings selected", Toast.LENGTH_LONG).show();
+                break;
+
+            default:
+                break;
+        }
+
+        return true;
     }
 
     }

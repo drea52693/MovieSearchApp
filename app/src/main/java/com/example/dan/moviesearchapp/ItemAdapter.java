@@ -10,20 +10,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.dan.moviesearchapp.APICalls.ChildMovieSearchResponse;
+import com.example.dan.moviesearchapp.APICalls.Movie;
+import com.example.dan.moviesearchapp.APICalls.MovieTrailerSearchResponse;
+import com.example.dan.moviesearchapp.APICalls.OmdbAPI;
+import com.example.dan.moviesearchapp.APICalls.RoviAPI;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
+
+    private final String TAG = getClass().getSimpleName();
 
     private ArrayList<String> values;
     private ArrayList<Movie> movieList;
@@ -84,9 +87,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         public void onClick(View v) {
 
             // On click open Fragment with movie details
-            Log.d("TAG", toString());
+            Log.d(TAG, toString());
 
-            Runnable run = new Runnable() {
+            Runnable run1 = new Runnable() {
                 @Override
                 public void run() {
 
@@ -104,7 +107,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
                         if (!(getImdbID().isEmpty())) {
 
-                            omdbAPI.getMovieChildData(getImdbID()).enqueue(new Callback<ChildMovieSearchResponse>() {
+                            omdbAPI.getMovieDetails(getImdbID()).enqueue(new Callback<ChildMovieSearchResponse>() {
                                 @Override
                                 public void onResponse(Call<ChildMovieSearchResponse> call, Response<ChildMovieSearchResponse> response) {
 
@@ -118,21 +121,17 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                                         context.startActivity(intent);
 
 
-
-
-
-
                                     } catch (NullPointerException e) {
 
 
-                                        Log.d("TAG", "Response is null");
+                                        Log.d(TAG, "Response is null");
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(Call<ChildMovieSearchResponse> call, Throwable t) {
 
-                                    Log.d("TAG", "Failed Response ");
+                                    Log.d(TAG, "Failed Response ");
 
                                 }
                             });
@@ -144,8 +143,46 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
             };
 
-            run.run();
+            run1.run();
 
+            Runnable run2 = new Runnable() {
+                @Override
+                public void run() {
+
+                    RetrofitSingleton retrofitSingleton = RetrofitSingleton.getInstance();
+
+                    RoviAPI roviAPI = retrofitSingleton.retrofit.create(RoviAPI.class);
+
+                    roviAPI.getMovieTrailer(getTitle()).enqueue(new Callback<MovieTrailerSearchResponse>() {
+                        @Override
+                        public void onResponse(Call<MovieTrailerSearchResponse> call, Response<MovieTrailerSearchResponse> response) {
+
+                            try{
+
+                                MovieTrailerSearchResponse trailer = response.body();
+
+                                Intent intent = new Intent(context, MoviesDetailsActivity.class);
+                                intent.putExtra("Movie data", trailer);
+                                context.startActivity(intent);
+
+
+                            }catch(NullPointerException e){
+
+                                Log.d(TAG, "Response was null");
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<MovieTrailerSearchResponse> call, Throwable t) {
+
+                            Log.d(TAG, "Failed Response ");
+
+                        }
+                    });
+                }
+            };
 
 
           /*  if(!favorites.contains(this.getTitle()))

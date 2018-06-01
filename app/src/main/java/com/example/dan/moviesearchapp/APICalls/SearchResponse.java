@@ -1,10 +1,9 @@
-package com.example.dan.moviesearchapp;
+package com.example.dan.moviesearchapp.APICalls;
 
+import com.example.dan.moviesearchapp.APICalls.Movie;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class SearchResponse {
 

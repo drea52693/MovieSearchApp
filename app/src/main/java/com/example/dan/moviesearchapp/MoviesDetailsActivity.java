@@ -8,20 +8,21 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.LayoutInflater;
 
+import com.example.dan.moviesearchapp.APICalls.ChildMovieSearchResponse;
+import com.example.dan.moviesearchapp.APICalls.Movie;
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 
 @SuppressWarnings("serial")
 public class MoviesDetailsActivity extends AppCompatActivity {
 
+    private final String TAG = getClass().getSimpleName();
+
     private ArrayList<Movie> movies;
     private ChildMovieSearchResponse movieData;
-    private final String TAG = getClass().getSimpleName();
 
     TextView titleTextView;
     ImageButton favoritesButton;
@@ -97,7 +98,7 @@ public class MoviesDetailsActivity extends AppCompatActivity {
 
 
         });
-        Log.d("TAG", "onResponse: ");
+        Log.d(TAG, "onResponse: ");
 
     }
 

@@ -1,4 +1,4 @@
-package com.example.dan.moviesearchapp;
+package com.example.dan.moviesearchapp.APICalls;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -16,7 +16,8 @@ public interface FandangoAPI {
 
 
     // This operation returns a list of performances for a list of theaters (theaters seperated by commas, date =  MM-DD-YYYY)
-    public Call<FandangoSearchResponse> performancesByTheaterList(@Query("theaterids") String theaterIDs, @Query("date") String date);
+    public Call<FandangoSearchResponse> performancesByTheaterList(@Query("theaterids") String theaterIDs,
+                                                                  @Query("date") String date);
 
 
 }

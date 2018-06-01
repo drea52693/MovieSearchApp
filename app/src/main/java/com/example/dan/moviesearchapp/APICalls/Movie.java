@@ -1,17 +1,12 @@
-package com.example.dan.moviesearchapp;
+package com.example.dan.moviesearchapp.APICalls;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Movie implements Comparable<Movie>, Parcelable  {
