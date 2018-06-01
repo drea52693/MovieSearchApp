@@ -9,10 +9,10 @@ import retrofit2.http.Query;
 interface OmdbAPI {
 
      @GET("/?apikey=4b8edb9d")
-     public Call<SearchResponse> search(@Query("s") String name);
+     public Call<SearchResponse> searchForTitle(@Query("s") String name);
 
      @GET("/?apikey=4b8edb9d")
-     public Call<ChildMovieSearchResponse> getMovieChildData(@Query("i") String imdbID);
+     public Call<ChildMovieSearchResponse> getMovieDetails(@Query("i") String imdbID);
 
 
 
