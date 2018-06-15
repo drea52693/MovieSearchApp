@@ -10,7 +10,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name="com.activeandroid.app.Application">
+
+        <meta-data android:name="AA_DB_NAME" android:value="MoviesDB" />
+        <meta-data android:name="AA_DB_VERSION" android:value="1" />
+        <meta-data
+            android:name="AA_MODELS"
+            android:value="com.example.dan.moviesearchapp.MoviesDB
+        "
+            />
+
+
         <activity android:name=".ListOfMoviesActivity"></activity>
         <activity
             android:name=".SplashActivity"
@@ -24,6 +35,8 @@
         </activity>
         <activity android:name=".MoviesDetailsActivity"></activity>
     </application>
+
+
 
 
 

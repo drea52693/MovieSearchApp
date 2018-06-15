@@ -31,6 +31,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
     private final String TAG = getClass().getSimpleName();
 
+    static final String OMDB_BASE_URL = "http://www.omdbapi.com";
+
     public static ArrayList<Movie> movies;
 
     public Button searchButton;
@@ -45,7 +47,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_main_menu);
 
 
-
         Spinner spinner = findViewById(R.id.type_dropDown);
 
         // TODO: The keyboard shouldn't show up for spinner
@@ -54,12 +55,12 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                InputMethodManager imm=(InputMethodManager)getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(releaseYear.getWindowToken(), 0);
                 imm.hideSoftInputFromWindow(title.getWindowToken(), 0);
                 return false;
             }
-        }) ;
+        });
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.type_options, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -73,111 +74,99 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         type = findViewById(R.id.type_dropDown);
 
 
-
-
     }
 
     @Override
     public void onClick(View v) {
 
-        Runnable run = new Runnable() {
+        RetrofitSingleton retrofitSingleton = RetrofitSingleton.getInstance(OMDB_BASE_URL);
+
+        OmdbAPI omdbAPI = retrofitSingleton.retrofit.create(OmdbAPI.class);
+
+        final String titleInput = title.getText().toString();
+        final String releaseYearInput = releaseYear.getText().toString();
+        final String typeInput = type.getSelectedItem().toString();
+        omdbAPI.searchForTitle(titleInput).enqueue(new Callback<SearchResponse>() {
             @Override
-            public void run() {
-
-                RetrofitSingleton retrofitSingleton = RetrofitSingleton.getInstance();
-
-                OmdbAPI omdbAPI = retrofitSingleton.retrofit.create(OmdbAPI.class);
-
-                final String titleInput = title.getText().toString();
-                final String releaseYearInput = releaseYear.getText().toString();
-                final String typeInput = type.getSelectedItem().toString();
-                omdbAPI.searchForTitle(titleInput).enqueue(new Callback<SearchResponse>() {
-                    @Override
-                    public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
 
 
+                try {
 
-                        try{
-
-                            movies = response.body().getMovies();
-
+                    movies = response.body().getMovies();
 
 
-                            if (!releaseYearInput.isEmpty()) {
+                    if (!releaseYearInput.isEmpty()) {
 
-                                Iterator itr = movies.iterator();
+                        Iterator itr = movies.iterator();
 
-                                while (itr.hasNext()) {
+                        while (itr.hasNext()) {
 
-                                    Movie obj = (Movie) itr.next();
+                            Movie obj = (Movie) itr.next();
 
-                                    if (!obj.getYear().equals(releaseYearInput)) {
+                            if (!obj.getYear().equals(releaseYearInput)) {
 
-                                        itr.remove();
+                                itr.remove();
 
-                                    }
-                                }
                             }
+                        }
+                    }
 
 
-                            if (!typeInput.equals("No filter")) {
+                    if (!typeInput.equals("No filter")) {
 
-                                Iterator itr = movies.iterator();
+                        Iterator itr = movies.iterator();
 
-                                while (itr.hasNext()) {
+                        while (itr.hasNext()) {
 
-                                    Movie obj = (Movie) itr.next();
+                            Movie obj = (Movie) itr.next();
 
-                                    if(obj.getType().equals("movie") && !(typeInput.equals("Movie")))
-                                        itr.remove();
-
-
-                                    else if (obj.getType().equals("series") &&  !(typeInput.equals("TV Series")))
-                                        itr.remove();
-
-                                         else if(obj.getType().equals("game") && !(typeInput.equals("Video Game")))
-                                            itr.remove();
-
-                                }
-
-                                }
-
-                                if(movies.isEmpty()){
-
-                                        Toast.makeText(MainMenuActivity.this, "No movies found with this critera", Toast.LENGTH_LONG).show();
-
-                                }else {
+                            if (obj.getType().equals("movie") && !(typeInput.equals("Movie")))
+                                itr.remove();
 
 
-                                    Intent intent = new Intent(MainMenuActivity.this, ListOfMoviesActivity.class);
-                                    intent.putExtra("Movies", movies);
-                                    startActivity(intent);
+                            else if (obj.getType().equals("series") && !(typeInput.equals("TV Series")))
+                                itr.remove();
 
-                                }
-
-                        } catch (NullPointerException e){
-
-                            Toast.makeText(MainMenuActivity.this, "Please enter a valid title", Toast.LENGTH_LONG).show();
+                            else if (obj.getType().equals("game") && !(typeInput.equals("Video Game")))
+                                itr.remove();
 
                         }
 
                     }
 
-                    @Override
-                    public void onFailure(Call<SearchResponse> call, Throwable t) {
+                    if (movies.isEmpty()) {
+
+                        Toast.makeText(MainMenuActivity.this, "No movies found with this critera", Toast.LENGTH_LONG).show();
+
+                    } else {
 
 
-                        Toast.makeText(MainMenuActivity.this, "Bad connection, try again", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(MainMenuActivity.this, ListOfMoviesActivity.class);
+                        intent.putExtra("Movies", movies);
+                        startActivity(intent);
 
                     }
 
-                });
+                } catch (NullPointerException e) {
+
+                    Toast.makeText(MainMenuActivity.this, "Please enter a valid title", Toast.LENGTH_LONG).show();
+
+                }
+
             }
-        };
 
-        run.run();
+            @Override
+            public void onFailure(Call<SearchResponse> call, Throwable t) {
 
+
+                Toast.makeText(MainMenuActivity.this, "Bad connection, try again", Toast.LENGTH_LONG).show();
+
+            }
+
+        });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -191,7 +180,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         switch (item.getItemId()) {
             case R.id.action_home:
                 // Send to home screen
-                Toast.makeText(this,"Going to home page...", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Going to home page...", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(this, MainMenuActivity.class);
                 startActivity(intent);
 
@@ -199,12 +188,12 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
             case R.id.action_movie_listings:
                 // send to movie listings
-                Toast.makeText(this,"Going to Movie Listings...", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Going to Movie Listings...", Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.action_favorites:
                 // Send to favorites screen
-                Toast.makeText(this,"Going to favorites...", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Going to favorites...", Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.action_refresh:
@@ -224,5 +213,5 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         return true;
     }
 
-    }
+}
 

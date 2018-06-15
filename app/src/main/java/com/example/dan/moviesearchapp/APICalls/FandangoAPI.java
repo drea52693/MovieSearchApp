@@ -6,8 +6,8 @@ import retrofit2.http.Query;
 
 public interface FandangoAPI {
 
-    @GET("") // api key
-    public Call<FandangoSearchResponse> getTheatersByZip(@Query("postalcode") String zipCode);
+    @GET("/?apikey=7nwb8aryjamb997ewwyr8f5w") // api key
+    public Call<FandangoSearchResponse> theatersByPostalCodeSearch(@Query("postalcode") String zipCode);
 
     // This operation returns an ordered list of theaters and their performances that are playing a specific movie near the postal code specified
     public Call<FandangoSearchResponse> performancesByMoviePostalCodeSearch(@Query("movieid") int fandangoMovieID,

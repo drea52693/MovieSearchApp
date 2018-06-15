@@ -12,7 +12,9 @@ public class RetrofitSingleton {
 
     private static RetrofitSingleton single_instance = null;
 
-    static final String BASE_URL = "http://www.omdbapi.com";
+    static final String OMDB_BASE_URL = "http://www.omdbapi.com";
+    static final String FANDANGO_BASE_URL = "http://api.fandango.com";
+    static final String ROVI_BASE_URL = "http://api.rovicorp.com";
 
     protected Retrofit retrofit;
 
@@ -25,7 +27,7 @@ public class RetrofitSingleton {
             .addInterceptor(loggingInterceptor)
             .build();
 
-    private RetrofitSingleton(){
+    private RetrofitSingleton(String BASE_URL){
 
         this.retrofit = new Retrofit.Builder()
                 .client(client)
@@ -34,10 +36,10 @@ public class RetrofitSingleton {
                 .build();
     }
 
-    public static RetrofitSingleton getInstance(){
+    public static RetrofitSingleton getInstance(String BASE_URL){
 
         if(single_instance == null) {
-            single_instance = new RetrofitSingleton();
+            single_instance = new RetrofitSingleton(BASE_URL);
         }
         return single_instance;
     }

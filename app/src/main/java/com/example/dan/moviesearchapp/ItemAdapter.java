@@ -28,6 +28,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     private final String TAG = getClass().getSimpleName();
 
+    static final String OMDB_BASE_URL = "http://www.omdbapi.com";
+    static final String ROVI_BASE_URL = "http://api.rovicorp.com";
+
     private ArrayList<String> values;
     private ArrayList<Movie> movieList;
     private Context context;
@@ -100,7 +103,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
                         // Log.d("TAG", itr.toString());
 
-                        RetrofitSingleton retrofitSingleton = RetrofitSingleton.getInstance();
+                        RetrofitSingleton retrofitSingleton = RetrofitSingleton.getInstance(OMDB_BASE_URL);
 
                         OmdbAPI omdbAPI = retrofitSingleton.retrofit.create(OmdbAPI.class);
 
@@ -149,7 +152,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 @Override
                 public void run() {
 
-                    RetrofitSingleton retrofitSingleton = RetrofitSingleton.getInstance();
+                    RetrofitSingleton retrofitSingleton = RetrofitSingleton.getInstance(ROVI_BASE_URL);
 
                     RoviAPI roviAPI = retrofitSingleton.retrofit.create(RoviAPI.class);
 
@@ -185,10 +188,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             };
 
 
-          /*  if(!favorites.contains(this.getTitle()))
-               favorites.add(this.getTitle());
-            Toast.makeText(context, "Added to favorites", Toast.LENGTH_LONG).show();
-            Log.d("TAG",  favorites.toString());*/
 
         }
 

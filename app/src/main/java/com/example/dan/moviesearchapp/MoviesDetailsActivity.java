@@ -19,6 +19,8 @@ import java.util.ArrayList;
 @SuppressWarnings("serial")
 public class MoviesDetailsActivity extends AppCompatActivity {
 
+    public ArrayList<ChildMovieSearchResponse> favorites;
+
     private final String TAG = getClass().getSimpleName();
 
     private ArrayList<Movie> movies;
@@ -45,8 +47,7 @@ public class MoviesDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies_details);
 
-
-
+        favorites = new ArrayList<ChildMovieSearchResponse>();
 
          titleTextView = findViewById(R.id.titleTextView);
 
@@ -65,7 +66,7 @@ public class MoviesDetailsActivity extends AppCompatActivity {
          websiteURLTextView = findViewById(R.id.websiteURLTextView);
          typeTextView = findViewById(R.id.typeTextView);
 
-        ChildMovieSearchResponse data = getIntent().getParcelableExtra("Movie data");
+        final ChildMovieSearchResponse data = getIntent().getParcelableExtra("Movie data");
 
         Picasso.get().load(data.getPosterURL()).resize(350,550).into(posterImageView);
         Picasso.get().load(R.drawable.star).into(favoritesButton);
@@ -90,10 +91,25 @@ public class MoviesDetailsActivity extends AppCompatActivity {
         favoritesButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                //         if(!favorites.contains(this.getTitle()))
-                //        favorites.add(this.getTitle());
+
                 Toast.makeText(MoviesDetailsActivity.this, "Added to favorites", Toast.LENGTH_LONG).show();
-                //         Log.d("TAG",  favorites.toString());
+
+                //save movie object on local device
+
+                // TODO fix null pointer exception
+
+
+                MoviesDB obj = new MoviesDB(data.getTitle(), data.getReleaseDate(), data.getType(), data.getPosterURL());
+
+                obj.save();
+
+                Log.d(TAG, obj.getAllMovies().toString());
+
+
+
+
+
+
             }
 
 
